@@ -4,180 +4,62 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prendas kawaii LATAM</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!--librerias bootstrap-->
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="bootstrap/js/bootstrap.min.js">
-    <link rel="stylesheet" href="css/style.css">
-    <style> @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap'); </style>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
-    <title>Prendas kawaii LATAM</title>
+    <!--Box icon-->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    
 </head>
 
 <body>
     <main>
         <header>
-            <nav class="navbar navbar-expand-lg ">
-                <div class="container-fluid">
-                  <a class="navbar-brand" href="#">CuteClothes</a>
-                  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                  </button>
-                  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                      <li class="nav-item">
-                        <a class="nav-link" href="#">Promociones</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="#">Prendas</a>
-                      </li>
-                      <form class="d-flex " role="search">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
-                      </form>
-                    </ul>
-                  </div>
-                  <div>
-                    <img class="carrito-img" src="img/carrito.png" alt="">
-                  </div>
+          <div class="nav container">
+            <div class="logo-container">
+              <a href="#" class="logo">KawaiiClothes</a>
+            </div>
+              <a href="">Mujer</a>
+              <a href="">Hombre</a>
+              <a href="">Accesorios</a>
+              <!--icono del carrito-->
+              <i class='bx bx-cart' id="carrito-icono"></i>
+              <!--carrito-->
+              <div class="carrito">
+                <!--contenido-->
+                <div class="carrito-contenido">
+                  
                 </div>
-              </nav>
-        </header>
-        <h1 class="tituloup">Populares de la semana</h1>
-
-
-        <div class="shop" id="shop">
-          <div class="item">
-            <img class= "shop_img" src="img/1.png" alt="">
-            <div class="shop_details">
-          <h3 class="prendas_p">Camibuso de dinosaurio</h3>
-          <p class="prendas_price">COP100.000</p>
-          <div class="buttons">
-            <i class="bi bi-dash-lg"></i>
-            <div class="quantity">0</div>
-            <i class="bi bi-plus-lg"></i>
+                <!--Boton de compra-->
+                <button type="button" class="btn-comprar">Realizar Compra</button>
+                <!--Cerrar carrito-->
+                <i class='bx bx-x' id="cerrar-carrito"></i>
+              </div>
           </div>
-        </div>
-        </div>
+        </header>
 
-        <div class="item">
-          <img class= "shop_img" src="img/2.png" alt="">
-          <div class="shop_details">
-        <h3 class="prendas_p">Chaqueta de Conejitos</h3>
-        <p class="prendas_price">COP200.000</p>
-        <div class="buttons">
-          <i class="bi bi-dash-lg"></i>
-          <div class="quantity">0</div>
-          <i class="bi bi-plus-lg"></i>
-        </div>
-      </div>
-      </div>
-
-      <div class="item">
-        <img class= "shop_img" src="img/3.png" alt="">
-        <div class="shop_details">
-      <h3 class="prendas_p">Camibuso de chica Kitsune</h3>
-      <p class="prendas_price">COP220.000</p>
-      <div class="buttons">
-        <i class="bi bi-dash-lg"></i>
-        <div class="quantity">0</div>
-        <i class="bi bi-plus-lg"></i>
-      </div>
-    </div>
-    </div>
-
-    <div class="item">
-      <img class= "shop_img" src="img/4.png" alt="">
-      <div class="shop_details">
-    <h3 class="prendas_p">Camibuso de gatito</h3>
-    <p class="prendas_price">COP80.000</p>
-    <div class="buttons">
-      <i class="bi bi-dash-lg"></i>
-      <div class="quantity">0</div>
-      <i class="bi bi-plus-lg"></i>
-    </div>
-  </div>
-  </div>
-
-  <div class="item">
-    <img class= "shop_img" src="img/5.png" alt="">
-    <div class="shop_details">
-  <h3 class="prendas_p">Conjunto leyenda China</h3>
-  <p class="prendas_price">COP250.000</p>
-  <div class="buttons">
-    <i class="bi bi-dash-lg"></i>
-    <div class="quantity">0</div>
-    <i class="bi bi-plus-lg"></i>
-  </div>
-</div>
-</div>
-
-<div class="item">
-  <img class= "shop_img" src="img/6.png" alt="">
-  <div class="shop_details">
-<h3 class="prendas_p">Chaqueta Monte Fuji</h3>
-<p class="prendas_price">COP280.000</p>
-<div class="buttons">
-  <i class="bi bi-dash-lg"></i>
-  <div class="quantity">0</div>
-  <i class="bi bi-plus-lg"></i>
-</div>
-</div>
-</div>
-
-<div class="item">
-  <img class= "shop_img" src="img/9.png" alt="">
-  <div class="shop_details">
-<h3 class="prendas_p">Conjunto estilo colegiala</h3>
-<p class="prendas_price">COP210.000</p>
-<div class="buttons">
-  <i class="bi bi-dash-lg"></i>
-  <div class="quantity">0</div>
-  <i class="bi bi-plus-lg"></i>
-</div>
-</div>
-</div>
-
-<div class="item">
-  <img class= "shop_img" src="img/14.jpeg" alt="">
-  <div class="shop_details">
-<h3 class="prendas_p">Pantalón bota ancha</h3>
-<p class="prendas_price">COP80.000</p>
-<div class="buttons">
-  <i class="bi bi-dash-lg"></i>
-  <div class="quantity">0</div>
-  <i class="bi bi-plus-lg"></i>x
-</div>
-</div>
-</div>
-
-<div class="item">
-  <img class= "shop_img" src="img/13.jpeg" alt="">
-  <div class="shop_details">
-<h3 class="prendas_p">Pantalón cuadros</h3>
-<p class="prendas_price">COP120.000</p>
-<div class="buttons">
-  <i class="bi bi-dash-lg"></i>
-  <div class="quantity">0</div>
-  <i class="bi bi-plus-lg"></i>
-</div>
-</div>
-</div>
-
-    </div>
-            
-
-
-            <div class="footer-basic">
-                <footer>
-                    <ul class="list-inline">
-                        <li class="list-inline-item"><a href="#">Home</a></li>
-                        <li class="list-inline-item"><a href="#">Services</a></li>
-                        <li class="list-inline-item"><a href="#">About</a></li>
-                        <li class="list-inline-item"><a href="#">Terms</a></li>
-                        <li class="list-inline-item"><a href="#">Privacy Policy</a></li>
-                    </ul>
-                    <p class="copyright">Company Name © 2018</p>
-        </footer>
+        <!--tienda-->
+        <section class="shop container">
+          <h2 class="section-title">Nuestros productos</h2>
+          <!--contenido-->
+          <div class="productos">
+          </div>
+        </section>
+        <div class="footer-basic">
+          <footer>
+              <ul class="list-inline">
+                  <li class="list-inline-item"><a href="#">Home</a></li>
+                  <li class="list-inline-item"><a href="#">Services</a></li>
+                  <li class="list-inline-item"><a href="#">About</a></li>
+                  <li class="list-inline-item"><a href="#">Terms</a></li>
+                  <li class="list-inline-item"><a href="#">Privacy Policy</a></li>
+              </ul>
+              <p class="copyright">Company Name © 2018</p>
+  </footer>
     </main>
+    <script src="/js/productos.js"></script>
+    <script src="/js/backup.js"></script>
 </body>
-<script src="js/main.js"></script>
 </html>
