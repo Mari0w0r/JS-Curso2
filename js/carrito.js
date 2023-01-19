@@ -1,60 +1,10 @@
-//DEFINICION DE VARIABLES
 let iconoCarrito = document.querySelector('#carrito-icono')
 let carritoClase = document.querySelector('.carrito');
 let cerrarCarrito = document.querySelector('#cerrar-carrito')
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+const itemsCarritoEl = document.querySelector(".carrito-contenido");
+const productsEl = document.querySelector(".productos");
+const subtotalEl = document.querySelector(".total");
 
-//FUNCIONES 
-
-//RENDERIZAR
-function renderizarProductos(){
-    productos.forEach((producto) => {
-        productsEl.innerHTML += `
-        <div class="producto-caja">
-            <img src="${producto.imgsrc}" alt="" class="producto-imagen">
-            <h2 class="producto-titulo">${producto.name}</h2>
-            <span class="precio">${producto.precio}</span>
-            <i class='bx bx-shopping-bag añadir-carrito'></i>
-            </div>
-        `
-    })
-}
-
-//FUNCION CARRITO
-if (document.readyState == 'loading'){
-    document.addEventListener('DOMContentLoaded', ready)
-} else {
-    ready()
-}
-
-//FUNCION DEL FUNCIONAMIENTO DEL CARRITO
-function ready() {
-    //elimina objetos del carrito
-    let botonEliminar = document.getElementsByClassName('carrito-eliminar')
-    console.log(eliminarObjetosCarrito)
-    for (let i = 0; i < botonEliminar.length; i++){
-        let boton = botonEliminar[i];
-        boton.addEventListener('click', eliminarObjetosCarrito)
-    }
-    //cambia la cantidad
-    let inputsCantidad = document.getElementsByClassName('carrito-cantidad')
-    for (let i = 0; i < inputsCantidad.length; i++){
-        let input = inputsCantidad[i];
-        input.addEventListener('change', cantidadCambiada)
-    }
-    //Añade productos al carrito
-    let añadidoAlCarrito = document.getElementsByClassName('añadir-carrito')
-    for (let i = 0; i < añadidoAlCarrito.length; i++){
-        let botonPrenda = añadidoAlCarrito[i];
-        botonPrenda.addEventListener('click', añadirCarritoClicked)
-    }
-    //boton de compra
-    document.getElementsByClassName('btn-comprar')[0].addEventListener('click', btnCompraClicked)
-}
-//--------------------------------------------------------------------------------------------------------------------------------------------------------- 
-
-//ABRIR Y CERRAR CARRITO/ FUNCION DE COMPRA
-//--------------------------------------------------------------------------------------------------------------------------------------------------------- 
 
 //ABRIR CARRITO 
 iconoCarrito.onclick = () => {
@@ -67,98 +17,138 @@ cerrarCarrito.onclick = () => {
     carritoClase.classList.remove("active");
 }
 
-//FUNCION DE BOTON DE COMPRA
-
-function btnCompraClicked(){
-    alert("Tu Compra ha sido realizada")
-    let contenidocarro = document.getElementsByClassName('carrito-contenido')[0]
-    while (contenidocarro.hasChildNodes()){
-        contenidocarro.removeChild(contenidocarro.firstChild)
-    }
+function renderizarProductos(){
+    productos.forEach((producto) => {
+        productsEl.innerHTML += `
+        <div class="producto-caja">
+            <img src="${producto.imgsrc}" alt="" class="producto-imagen">
+            <h2 class="producto-titulo">${producto.name}</h2>
+            <span class="precio">${producto.precio}</span>
+            <i class='bx bx-shopping-bag añadir-carrito' onclick="añadirAlCarrito(${producto.id})"></i>
+        </div>
+        `
+    })
 }
-//---------------------------------------------------------------------------------------------------------------------------------------------------------
+renderizarProductos();
 
-//AÑADIR Y ELIMINAR OBJETOS DEL CARRITO
-//---------------------------------------------------------------------------------------------------------------------------------------------------------
+//cart array
 
-//AÑADIR OBJETOS AL CARRITO 
-function añadirCarritoClicked(añadido){
-    let botonAñadir = añadido.target
-    let comprarProductos = botonAñadir.parentElement
-    let titulo = comprarProductos.getElementsByClassName('producto-titulo')[0].innerText
-    let precio = comprarProductos.getElementsByClassName('precio')[0].innerText
-    let imgPrenda = comprarProductos.getElementsByClassName('producto-imagen')[0].src
-    añadirPrendaCarrito(titulo, precio, imgPrenda);
-    actualizarPrecioTotal();
+let carrito = JSON.parse(localStorage.getItem("CARRITO")) || [];
+actualizarCarrito();
+
+//AÑADIR AL CARRITO
+function añadirAlCarrito(id){
+    //CHEQUEAR SI EL PRODUCTO YA EXISTE
+    if(carrito.some((elemento) => elemento.id === id)){
+        cambiarNumeroDeUnidades("mas", id)
+    } else {
+        const elemento = productos.find((producto) => producto.id === id)
+
+        carrito.push({
+            ...elemento,
+            numeroDeUnidades: 1,
+        })
     }
+
+    actualizarCarrito();
+}
+
+//ACTUALIZAR CARRITO
+function actualizarCarrito(){
+    renderizarElementosDelCarrito();
+    renderizarSubtotal();
+
+    //GUARDAR AL LOCAL STORAGE
+    localStorage.setItem("CARRITO", JSON.stringify(carrito));
+}
+
+//CALCULAR TOTAL
+function renderizarSubtotal(){
+    let precioTotal = 0, totalElementos = 0;
+
+    carrito.forEach((elemento) =>{
+        precioTotal += elemento.precio * elemento.numeroDeUnidades;
+        totalElementos += elemento.numeroDeUnidades;
+
+        subtotalEl.innerHTML = `
+        <div class="total-titulo">TOTAL</div>
+        <div class="total-precio">COP${precioTotal}(${totalElementos} productos)</div>
+        `
+    })
+}
+
+
+//RENDERIZAR ELEMENTOS DEL CARRITO
+function renderizarElementosDelCarrito(){
+    console.log(carrito);
+    itemsCarritoEl.innerHTML = "";
+    carrito.forEach((elemento) => {
+        itemsCarritoEl.innerHTML +=`
+        <div class="carrito-box">
+            <img src="${elemento.imgsrc}" alt="" class="carrito-imagen">
+                <div class="detalles-container">
+                    <div class="carrito-producto-titulo">${elemento.name}</div>
+                    <div class="producto-precio">COP${elemento.precio}</div>
+                        <div class="unidades">
+                            <i class='bx bx-minus cambiar-cantidad' onclick="cambiarNumeroDeUnidades('menos', ${elemento.id})"></i>
+                            <div class="number">${elemento.numeroDeUnidades}</div>
+                            <i class='bx bx-plus cambiar-cantidad' onclick="cambiarNumeroDeUnidades('mas', ${elemento.id})"></i>          
+                        </div>
+                </div>
+                    <i class='bx bxs-trash-alt carrito-eliminar' onclick="eliminarElementosDelCarrito(${elemento.id})"></i>
+        </div>
+        `
+    });
+}
 
 //ELIMINAR OBJETOS DEL CARRITO
-function eliminarObjetosCarrito(evento){
-    let botonclickeado = evento.target
-    botonclickeado.parentElement.remove()
-    actualizarPrecioTotal();
-}
-//---------------------------------------------------------------------------------------------------------------------------------------------------------
+function eliminarElementosDelCarrito(id){
+    carrito = carrito.filter((elemento) => elemento.id !== id)
 
-//ACTUALIZAR PRECIO Y CAMBIOS DE CANTIDAD
-//---------------------------------------------------------------------------------------------------------------------------------------------------------
+    actualizarCarrito();
 
-//ACTUALIZAR PRECIO TOTAL
-function actualizarPrecioTotal(){
-    let contenidoCarrito = document.getElementsByClassName('carrito-contenido')[0]
-    let cajasCarrito = contenidoCarrito.getElementsByClassName('carrito-caja')
-    let total = 0;
-    for (let i = 0; i < cajasCarrito.length; i++){
-        let cajaCarrito = cajasCarrito[i]
-        let precioElemento = cajaCarrito.getElementsByClassName('producto-precio')[0]
-        let cantidadElemento = cajaCarrito.getElementsByClassName('carrito-cantidad')[0 ]
-        let precio = parseFloat(precioElemento.innerText.replace("COP", ""));
-        let cantidad = cantidadElemento.value;
-        total = total + (precio * cantidad);
-        document.getElementsByClassName('total-precio')[0].innerText = "COP" + total;
+    if(carrito.length == 0){
+        subtotalEl.innerHTML = `
+        <div class="total-titulo">TOTAL</div>
+        <div class="total-precio">COP0</div>
+        `
     }
 }
 
-//FUNCION CAMBIOS DE CANTIDAD
-function cantidadCambiada(precios){
-    let input = precios.target;
-    if(isNaN(input.value) || input.value <= 1){
-        input.value = 1;
-    }
-    actualizarPrecioTotal();
-}
-//---------------------------------------------------------------------------------------------------------------------------------------------------------
+//CAMBIAR NUMERO DE UNIDADES
+function cambiarNumeroDeUnidades(accion, id){
+    carrito = carrito.map((elemento)=>{
 
-//PRENDAS PERSONALIZADAS DENTRO DEL CARRITO(IMAGENES, TITULOS Y PRECIOS)
-//---------------------------------------------------------------------------------------------------------------------------------------------------------
+        let numeroDeUnidades = elemento.numeroDeUnidades;
 
-function añadirPrendaCarrito(titulo, precio, imgPrenda){
-    let cartShopBox = document.createElement('div')
-    cartShopBox.classList.add('carrito-caja')
-    let elementosCarrito = document.getElementsByClassName('carrito-contenido')[0];
-    let elementosCarritoNombres = elementosCarrito.getElementsByClassName('carrito-producto-titulo')
-    for (let i = 0; i < elementosCarritoNombres.length; i++){
-        if (elementosCarritoNombres[i].innerText == titulo){
-            alert("Ya tienes este producto en tu carrito")
-            return;
+        if(elemento.id === id){
+            if(accion === "menos" && numeroDeUnidades > 1){
+                numeroDeUnidades--
+            } else if(accion === "mas" && numeroDeUnidades < elemento.instock){
+                numeroDeUnidades++
+            }
         }
+
+        return {
+            ...elemento,
+            numeroDeUnidades,
+        };
+    });
+
+    actualizarCarrito();  
+}
+
+function btnCompraClicked(){
+    while (itemsCarritoEl.hasChildNodes()){
+        itemsCarritoEl.removeChild(itemsCarritoEl.firstChild)
+    }
+    alert("Tu Compra ha sido realizada")
+
+    subtotalEl.innerHTML = `
+    <div class="total-titulo">TOTAL</div>
+    <div class="total-precio">COP0</div>
+    `
+    localStorage.removeItem("CARRITO");
     }
 
-let cartBoxContent = `
-                        <img src="${imgPrenda}" alt="" class="carrito-imagen">
-                        <div class="detalles-container">
-                            <div class="carrito-producto-titulo">${titulo}</div>
-                            <div class="producto-precio">${precio}</div>
-                            <input type="number" value="1" class="carrito-cantidad">
-                        </div>
-                        <i class='bx bxs-trash-alt carrito-eliminar'></i> `;
-cartShopBox.innerHTML = cartBoxContent;
-elementosCarrito.append(cartShopBox)
-cartShopBox
-.getElementsByClassName('carrito-eliminar')[0]
-.addEventListener('click', eliminarObjetosCarrito)
-cartShopBox
-.getElementsByClassName('carrito-cantidad')[0]
-.addEventListener('change', cantidadCambiada)
-}
 
